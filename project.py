@@ -53,7 +53,7 @@ class RegisterForm(FlaskForm):
 
         if existing_user_username:
             raise ValidationError (
-                "That username exist. Please select another username."
+                "That username exists. Please select another username."
             )
 
 class LoginForm(FlaskForm):
@@ -92,8 +92,6 @@ def get_movies():
     )
     movie_data = response.json()
     pretty_json_data = json.dumps(movie_data, indent=4, sort_keys=True)
-    print(f'movie_data response.status_code = {response.status_code}')
-    print(pretty_json_data)
     img_url = IMG_URL + movie_data['poster_path']
     wiki_link = wiki_api(title = movie_data['original_title'])
     
@@ -125,15 +123,11 @@ def movie_sorter(movie_data, img_url, wiki_link, MOVIE):
     all_movie_data = [movie_data['original_title'], movie_data['tagline'], movies_info, img_url, wiki_link, MOVIE]
     return all_movie_data
 
+@app.route('/')
+def home():
+    return flask.render_template('welcome.html')
 
-# @app.route('/')
-
-# def index():
-#     movies_info = get_movies()
-#     return render_template('website.html', title=movies_info[0], summary=movies_info[1], genre=movies_info[2], image=movies_info[3], wiki=movies_info[4])
-
-
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
 
@@ -175,20 +169,18 @@ def index():
     form = MovieForm()
     movies_info = get_movies()
     if current_user.is_authenticated:
-       # user = current_user.username
-
         if form.validate_on_submit():
             user = current_user.username
-            movie_rating = Movie(username=user, movieid=form.movieid.data, rating=form.rating.data, comment=form.comment.data) 
+            movie_rating = Movie(username=user, movieid=form.movieid.data, 
+                rating=form.rating.data, comment=form.comment.data) 
             db.session.add(movie_rating)
             db.session.commit()
             return flask.redirect(flask.url_for('index'))
-
         movieID = Movie.query.filter_by(movieid=movies_info[5]).all()
-        
-        
 
-    return flask.render_template('website.html', title=movies_info[0], summary=movies_info[1], genre=movies_info[2], image=movies_info[3], wiki=movies_info[4], movie=movies_info[5], query=movieID, form=form)
+    return flask.render_template('website.html', title=movies_info[0], 
+        summary=movies_info[1], genre=movies_info[2], image=movies_info[3], 
+        wiki=movies_info[4], movie=movies_info[5], query=movieID, form=form)
 
 
 #app.run(debug=True)
