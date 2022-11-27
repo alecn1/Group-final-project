@@ -1,0 +1,20 @@
+header {
+    background-color: black;
+    text-align: center;
+    padding: 20px;
+    color: white;
+}
+.main {
+    text-align: center;
+    background-color: peachpuff;
+    padding: 10px;
+}
+.field {
+    border: 2px solid black;
+}
+.signup {
+    text-align: center;
+}
+.login {
+    text-align: center;
+}

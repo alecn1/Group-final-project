@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/styling.css') }}">
+    </head>
+    <header><h1>Movie Explorer</h1>
+        <nav class="navbar">
+            <div class="container">
+                <div id="navbarMenuHeroA" class="navbar-menu">
+                    <div class="navbar-end">
+                        <a href="{{ url_for('index') }}" class="navbar-item">
+                            Home
+                        </a>
+                        <a href="{{ url_for('login') }}" class="navbar-item">
+                            Login
+                        </a>
+                        <a href="{{ url_for('signup') }}" class="navbar-item">
+                            Sign Up
+                        </a>
+                        <a href="{{ url_for('logout') }}" class="navbar-item">
+                            Sign Out
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <body>
+        <div class="main">
+        <h2>{{title}}</h2>
+        <h3>{{summary}}</h3>
+        <p>Genres: {{genre}}</p>
+        <img src={{image}} alt={{title}}><br>
+        <a href={{wiki}}>Click here to visit the movies wiki page!</a><br>
+        <div style="padding-top: 15px;">
+        <form method="POST" action=""> 
+            {{ form.hidden_tag() }}
+                    {{ form.movieid.label }}
+                    {{ form.movieid(placeholder="MovieID", value=movie) }}
+                    
+                    {{ form.rating.label }}
+                    {{ form.rating(placeholder="Rating")}} <br>
+                    <br>
+
+                   <br>
+                    {{ form.comment(cols="30", rows="4", placeholder="Leave a comment") }}<br>
+                    {{ form.submit }}
+        </form>
+        <h1>See what other people said!</h1>
+        </div>
+        {% for movies in query %}
+       <h2>User: {{movies.username}}</h2>
+       <h2>Rating: {{movies.rating}}</h2>
+       <h3>{{movies.comment}}</h3><br>
+                {% endfor %}
+               
+        </div>
+    </body>
+</html> 
