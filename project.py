@@ -1,4 +1,5 @@
-from flask import Flask, render_template, url_for, redirect, flash
+#from flask import Flask, render_template, url_for, redirect, flash
+import flask
 import requests
 import json
 import os
@@ -13,7 +14,7 @@ from wtforms.widgets import TextArea
 
 load_dotenv(find_dotenv())
 
-app = Flask(__name__)
+app = flask.Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
 app.config['SECRET_KEY'] = 'aSecret'
 db = SQLAlchemy(app)
@@ -139,18 +140,18 @@ def login():
     if form.validate_on_submit():
         user = Person.query.filter_by(username=form.username.data).first()
         login_user(user)
-        return redirect(url_for('index'))
+        return flask.redirect(flask.url_for('index'))
 
     user = Person.query.filter_by(username=form.username.data).first()
 
 
-    return render_template('login.html', form=form)
+    return flask.render_template('login.html', form=form)
 
 @app.route('/logout', methods=['GET', 'POST'])
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('login'))
+    return flask.redirect(flask.url_for('login'))
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -160,13 +161,13 @@ def signup():
         new_user = Person(username=form.username.data)
         db.session.add(new_user)
         db.session.commit()
-        return redirect(url_for('login'))
+        return flask.redirect(flask.url_for('login'))
 
     user = Person.query.filter_by(username=form.username.data).first()
     if user:
-        flash ('This username is taken. Try again or')
+        flask.flash ('This username is taken. Try again or')
 
-    return render_template('signup.html', form=form)
+    return flask.render_template('signup.html', form=form)
 
 @app.route('/home', methods=['GET', 'POST'])
 @login_required
@@ -181,13 +182,13 @@ def index():
             movie_rating = Movie(username=user, movieid=form.movieid.data, rating=form.rating.data, comment=form.comment.data) 
             db.session.add(movie_rating)
             db.session.commit()
-            return redirect(url_for('index'))
+            return flask.redirect(flask.url_for('index'))
 
         movieID = Movie.query.filter_by(movieid=movies_info[5]).all()
         
         
 
-    return render_template('website.html', title=movies_info[0], summary=movies_info[1], genre=movies_info[2], image=movies_info[3], wiki=movies_info[4], movie=movies_info[5], query=movieID, form=form)
+    return flask.render_template('website.html', title=movies_info[0], summary=movies_info[1], genre=movies_info[2], image=movies_info[3], wiki=movies_info[4], movie=movies_info[5], query=movieID, form=form)
 
 
 #app.run(debug=True)
