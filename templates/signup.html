@@ -2,6 +2,16 @@
 <html lang="en">
 <head>
     <style>
+        .Center {
+            /* background-size: 100% 100%; */
+            background-color: rgb(255, 255, 255);
+            max-width: 500px;
+            margin: auto;
+            text-align: center;
+            border-color:#040404;
+            border-width: medium;
+            padding: 80px 80px 40px 20px;
+        }
         body {
                 background-image: url('https://www.toptal.com/designers/subtlepatterns/uploads/let-there-be-sun.png');
                 background-repeat: no-repeat;
@@ -45,11 +55,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styling.css') }}">
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/styling.css') }}"> -->
     <title>Sign Up Page</title>
 
 </head>
 <body>
+    <div class="Center">
     <div class="signup">
     <h1>Register Page</h1>
     <form method="POST" action="">
@@ -68,6 +79,7 @@
     <a href="{{ url_for('login') }}" class="navbar-item">
         Login
     </a>
+    </div>
     </div>
 </body>
 </html>

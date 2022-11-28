@@ -174,4 +174,4 @@ def index():
         summary=movies_info[1], genre=movies_info[2], image=movies_info[3], 
         wiki=movies_info[4], movie=movies_info[5], query=movieID, form=form)
 
-app.run(debug=True)
+#app.run(debug=True)
