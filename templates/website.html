@@ -60,36 +60,13 @@
 
     <body>
         <div class="Center">
-        <div class="main">
-        <h1>Movie Explorer</h1>
-        <h2>{{title}}</h2>
-        <h3>{{summary}}</h3>
-        <p>Genres: {{genre}}</p>
-        <img src={{image}} alt={{title}}><br>
-        <a href={{wiki}}>Click here to visit the movies wiki page!</a><br>
-        <div style="padding-top: 15px;">
-        <form method="POST" action=""> 
-            {{ form.hidden_tag() }}
-                    {{ form.movieid.label }}
-                    {{ form.movieid(placeholder="MovieID", value=movie) }}
-                    
-                    {{ form.rating.label }}
-                    {{ form.rating(placeholder="Rating")}} <br>
-                    <br>
-
-                   <br>
-                    {{ form.comment(cols="30", rows="4", placeholder="Leave a comment") }}<br>
-                    {{ form.submit }}
-        </form>
-        <h1>See what other people said!</h1>
-        </div>
-        {% for movies in query %}
-       <h2>User: {{movies.username}}</h2>
-       <h2>Rating: {{movies.rating}}</h2>
-       <h3>{{movies.comment}}</h3><br>
-                {% endfor %}
+            <h1>Let's get prepared & happy!</h1><br><br>
+            <h2>News up first, coming to you<br> from the New York Times!</h2>
+            <h3>{{title}}</h3>
+            <h3>{{published_date}}</h3>
+            <h3>{{abstract}}</h3>
+            <a href={{the_url}}> Click here to read the full story!</a><br>
         </div>
         </div>
     </body>
 </html> 
-
