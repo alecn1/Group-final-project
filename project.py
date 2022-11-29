@@ -29,12 +29,10 @@ login_manager.login_view = "login"
 def load_user(user_id):
     return Person.query.get(int(user_id))
 
-
 class Person(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(200), nullable=False)
-
 
 class Movie(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -42,7 +40,6 @@ class Movie(db.Model):
     movieid = db.Column(db.Integer, nullable=True)
     rating = db.Column(db.Integer, nullable=True)
     comment = db.Column(db.String(200), nullable=True)
-    
 
 with app.app_context():
     db.create_all()
@@ -54,7 +51,6 @@ class RegisterForm(FlaskForm):
 
     def validate_username(self, username):
         existing_user_username = Person.query.filter_by(username=username.data).first()
-
         if existing_user_username:
             raise ValidationError (
                 "That username exists. Please select another username."
@@ -67,7 +63,6 @@ class LoginForm(FlaskForm):
 
     def validate_username(self, username):
         existing_user_username = Person.query.filter_by(username=username.data).first()
-
         if not existing_user_username:
             raise ValidationError (
                 "That username does not exist. Please try again."
@@ -80,9 +75,7 @@ class MovieForm(FlaskForm):
     comment = StringField(widget=TextArea(), validators=[Length(0, 200)])
     submit = SubmitField("Submit")
 
-
 def get_movies():
-    
     MOVIE_IDS = [84773, 864959, 634649]
     MOVIE = MOVIE_IDS[randrange(3)]
     MOVIE_PATH = f'/movie/{MOVIE}'
@@ -102,12 +95,9 @@ def get_movies():
     
     return movie_sorter(movie_data, img_url, wiki_link, MOVIE)
 
-
 def wiki_api(title):
     request = requests.Session()
-
     WIKI_API_BASE_URL = 'https://en.wikipedia.org/w/api.php'
-
     PARAMS={
         "action": "opensearch",
         "namespace": "0",
@@ -115,17 +105,17 @@ def wiki_api(title):
         "limit": "1",
         "format": "json"
     }
-
     wiki = request.get(url=WIKI_API_BASE_URL, params=PARAMS)
     wiki_data = wiki.json()
+
     return wiki_data[3][0]
 
 def movie_sorter(movie_data, img_url, wiki_link, MOVIE):
     movies_info = ""
     for genre in movie_data['genres']:
         movies_info = movies_info + str(genre['name']) + ", "
-
     all_movie_data = [movie_data['original_title'], movie_data['tagline'], movies_info, img_url, wiki_link, MOVIE]
+    
     return all_movie_data
 
 @app.route('/')
@@ -135,38 +125,34 @@ def home():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
-
     if form.validate_on_submit():
         user = Person.query.filter_by(username=form.username.data).first()
         login_user(user)
         return flask.redirect(flask.url_for('index'))
-
     user = Person.query.filter_by(username=form.username.data).first()
-
-
+    
     return flask.render_template('login.html', form=form)
 
 @app.route('/logout', methods=['GET', 'POST'])
 @login_required
 def logout():
     logout_user()
+    
     return flask.redirect(flask.url_for('login'))
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     form = RegisterForm()
-
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data)
         new_user = Person(username=form.username.data, password=hashed_password)
         db.session.add(new_user)
         db.session.commit()
         return flask.redirect(flask.url_for('login'))
-
     user = Person.query.filter_by(username=form.username.data).first()
     if user:
         flask.flash ('This username is taken. Try again or')
-
+    
     return flask.render_template('signup.html', form=form)
 
 @app.route('/home', methods=['GET', 'POST'])
@@ -183,10 +169,9 @@ def index():
             db.session.commit()
             return flask.redirect(flask.url_for('index'))
         movieID = Movie.query.filter_by(movieid=movies_info[5]).all()
-
+    
     return flask.render_template('website.html', title=movies_info[0], 
         summary=movies_info[1], genre=movies_info[2], image=movies_info[3], 
         wiki=movies_info[4], movie=movies_info[5], query=movieID, form=form)
-
 
 app.run(debug=True)

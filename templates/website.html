@@ -1,10 +1,16 @@
 <!DOCTYPE html>
 <html>
-  
     <head>
         <style>
+            
+            body {
+                background-image: url('https://www.toptal.com/designers/subtlepatterns/uploads/let-there-be-sun.png');
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+                background-size: cover;
+            }
             .topnav {
-                background-color: #333;
+                background-color: rgb(214, 137, 104);
                 overflow: hidden;
             }
 
@@ -12,6 +18,7 @@
             .topnav a {
                 float: left;
                 color: #f2f2f2;
+                text-shadow: 2px 2px #171616;
                 text-align: center;
                 padding: 14px 16px;
                 text-decoration: none;
@@ -26,7 +33,7 @@
 
             /* Add a color to the active/current link */
             .topnav a.active {
-                background-color: #e79529;
+                background-color: #d5cd86;
                 color: white;
             }
             .topnav-right {
@@ -34,17 +41,15 @@
             }
         </style>
         <div class="topnav">
-            <a href="/">Welcome</a>
-            <a href="/login">Login</a>
-            <a href="/signup">Signup</a>
-            <a class="active" href="{{ url_for('index') }}">Website</a>
+            <a href="/"><b>Home</b></a>
+            <a class="active" href="{{ url_for('index') }}"><b>Website</b></a>
             <div class="topnav-right">
-                <a href="/logout">Logout</a>
+                <a href="/logout"><b>Logout</b></a>
             </div>
         </div>
         
         <meta charset="UTF-8">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/styling.css') }}">
+        <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/styling.css') }}"> -->
     </head>
     <header> <h1>Movie Explorer</h1> </header>
     <body>
@@ -75,7 +80,7 @@
        <h2>Rating: {{movies.rating}}</h2>
        <h3>{{movies.comment}}</h3><br>
                 {% endfor %}
-               
         </div>
     </body>
 </html> 
+
