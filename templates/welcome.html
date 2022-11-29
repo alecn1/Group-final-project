@@ -1,8 +1,33 @@
 <html>
     <head>
         <style>
+            .Center {
+                /* background-size: 100% 100%; */
+                background-color: antiquewhite;
+                max-width: 500px;
+                margin: auto;
+                text-align: center;
+                border-color:#040404;
+                border-width: medium;
+                padding: 30px 30px 40px 20px;
+            }
+            /* h1 {
+                text-align: center;
+                
+                background-size: 100% 100%;
+                background-repeat:no-repeat;
+                border-color:#d5cd86;
+                display: inline-block;
+                padding: 30px 30px 40px 20px;
+            } */
+            body {
+                background-image: url('https://www.toptal.com/designers/subtlepatterns/uploads/let-there-be-sun.png');
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+                background-size: cover;
+            }
             .topnav {
-                background-color: #333;
+                background-color: rgb(214, 137, 104);
                 overflow: hidden;
             }
 
@@ -10,6 +35,7 @@
             .topnav a {
                 float: left;
                 color: #f2f2f2;
+                text-shadow: 2px 2px #171616;
                 text-align: center;
                 padding: 14px 16px;
                 text-decoration: none;
@@ -24,24 +50,27 @@
 
             /* Add a color to the active/current link */
             .topnav a.active {
-                background-color: #e79529;
+                background-color: #d5cd86;
                 color: white;
             }
         </style>
         <div class="topnav">
-            <a class="active" href="/">Home</a>
-            <a href="/login">Login</a>
-            <a href="/signup">Signup</a>
+            <a class="active" href="/"><b>Home</b></a>
+            <a href="/login"><b>Login</b></a>
+            <a href="/signup"><b>Signup</b></a>
+            <a href="{{ url_for('index') }}"><b>Website</b></a>
         </div>
     </head>
     
     <body>
-        <h1>
-            Ready From The Start
-        </h1>
-        <h3>
-            Welcome to the one-stop-shop to recieve the weather, news, <br>
-            randomly generated memes and jokes.
-        </h3>
+        <div class="Center">
+            <h1>
+                Ready From The Start
+            </h1>
+            <h3>
+                Welcome to the one-stop-shop to recieve the weather, news, <br>
+                randomly generated memes and jokes.
+            </h3>
+        </div>
     </body>
 </html>

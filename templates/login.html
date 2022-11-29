@@ -2,8 +2,14 @@
 <html lang="en">
 <head>
     <style>
+        body {
+            background-image: url('https://www.toptal.com/designers/subtlepatterns/uploads/let-there-be-sun.png');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+        }
         .topnav {
-            background-color: #333;
+            background-color: rgb(214, 137, 104);
             overflow: hidden;
         }
 
@@ -11,6 +17,7 @@
         .topnav a {
             float: left;
             color: #f2f2f2;
+            text-shadow: 2px 2px #171616;
             text-align: center;
             padding: 14px 16px;
             text-decoration: none;
@@ -25,15 +32,15 @@
 
         /* Add a color to the active/current link */
         .topnav a.active {
-            background-color: #e79529;
+            background-color: #d5cd86;
             color: white;
         }
     </style>
     <div class="topnav">
-        <a href="/">Home</a>
-        <a class="active" href="/login">Login</a>
-        <a href="/signup">Signup</a>
-        <a href="{{ url_for('index') }}">Website</a>
+        <a href="/"><b>Home</b></a>
+        <a class="active" href="/login"><b>Login</b></a>
+        <a href="/signup"><b>Signup</b></a>
+        <a href="{{ url_for('index') }}"><b>Website</b></a>
     </div>
 
     <meta charset="UTF-8">
