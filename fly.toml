@@ -1,6 +1,6 @@
-# fly.toml file generated for group-project-1 on 2022-11-27T10:41:13-06:00
+# fly.toml file generated for group-final on 2022-11-28T13:16:21-06:00
 
-app = "group-project-1"
+app = "group-final"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []

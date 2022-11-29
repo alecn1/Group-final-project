@@ -56,6 +56,7 @@
     <form method="POST" action="">
         {{ form.hidden_tag() }}
         {{ form.username }}
+        {{ form.password }}
         {{ form.submit }}
     </form>
     {% with messages = get_flashed_messages() %}

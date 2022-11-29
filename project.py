@@ -8,9 +8,10 @@ from random import randrange
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from flask_wtf import FlaskForm
-from wtforms import StringField, IntegerField, SubmitField, SelectField
+from wtforms import StringField, IntegerField, PasswordField, SubmitField, SelectField
 from wtforms.validators import InputRequired, Length, ValidationError, NumberRange
 from wtforms.widgets import TextArea
+from flask_bcrypt import Bcrypt
 
 load_dotenv(find_dotenv())
 
@@ -18,6 +19,7 @@ app = flask.Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
 app.config['SECRET_KEY'] = 'aSecret'
 db = SQLAlchemy(app)
+bcrypt = Bcrypt(app)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -30,6 +32,7 @@ def load_user(user_id):
 class Person(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
+    password = db.Column(db.String(200), nullable=False)
 
 class Movie(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -43,6 +46,7 @@ with app.app_context():
 
 class RegisterForm(FlaskForm):
     username = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username"})
+    password = PasswordField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Password"})
     submit = SubmitField("Register")
 
     def validate_username(self, username):
@@ -54,6 +58,7 @@ class RegisterForm(FlaskForm):
 
 class LoginForm(FlaskForm):
     username = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username"})
+    password = PasswordField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Password"})
     submit = SubmitField("Login")
 
     def validate_username(self, username):
@@ -139,7 +144,8 @@ def logout():
 def signup():
     form = RegisterForm()
     if form.validate_on_submit():
-        new_user = Person(username=form.username.data)
+        hashed_password = bcrypt.generate_password_hash(form.password.data)
+        new_user = Person(username=form.username.data, password=hashed_password)
         db.session.add(new_user)
         db.session.commit()
         return flask.redirect(flask.url_for('login'))
@@ -168,4 +174,4 @@ def index():
         summary=movies_info[1], genre=movies_info[2], image=movies_info[3], 
         wiki=movies_info[4], movie=movies_info[5], query=movieID, form=form)
 
-#app.run(debug=True)
+app.run(debug=True)
