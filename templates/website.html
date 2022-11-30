@@ -1,51 +1,6 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <style>
-            .Center {
-                /* background-size: 100% 100%; */
-                background-color: rgb(255, 255, 255);
-                max-width: 500px;
-                margin: auto;
-                text-align: center;
-                border-color:#040404;
-                border-width: medium;
-                padding: 50px 50px 40px 30px;
-            }
-            body {
-                background-image: url('https://www.toptal.com/designers/subtlepatterns/uploads/let-there-be-sun.png');
-                background-repeat: no-repeat;
-                background-attachment: fixed;
-                background-size: cover;
-            }
-            .topnav {
-                background-color: rgb(214, 137, 104);
-                overflow: hidden;
-            }
-            /* Style the links inside the navigation bar */
-            .topnav a {
-                float: left;
-                color: #f2f2f2;
-                text-shadow: 2px 2px #171616;
-                text-align: center;
-                padding: 14px 16px;
-                text-decoration: none;
-                font-size: 17px;
-            }
-            /* Change the color of links on hover */
-            .topnav a:hover {
-                background-color: #ddd;
-                color: black;
-            }
-            /* Add a color to the active/current link */
-            .topnav a.active {
-                background-color: #d5cd86;
-                color: white;
-            }
-            .topnav-right {
-                float: right;
-            }
-        </style>
         <div class="topnav">
             <a href="/"><b>Home</b></a>
             <a class="active" href="{{ url_for('index') }}"><b>Website</b></a>
@@ -55,64 +10,52 @@
         </div>
     
         <meta charset="UTF-8">
-        <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/styling.css') }}"> -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/styling.css') }}">
     </head>
 
     <body>
         <div class="Center">
-        <div class="main">
-        <h1>Movie Explorer</h1>
-        <div class="column is-one-third">
-                    
-            <div class="box">
-                <article class="media">
-                    <div class="media-left">
-                        <figure class="image is-50x50">
-                            <img src="http://openweathermap.org/img/w/{{ icon }}.png" alt="Image">
-                        </figure>
-                    </div>
-                    <div class="media-content">
-                        <div class="content">
-                            <p>
-                                <span class="title">{{ city }}</span>
-                                <br>
-                                <span class="subtitle">{{ temp }}° F</span>
-                                <br> {{ description }}
-                            </p>
-                        </div>
-                    </div>
-                </article>
-            </div>
-            
-        </div>
-        <h2>{{title}}</h2>
-        <h3>{{summary}}</h3>
-        <p>Genres: {{genre}}</p>
-        <img src={{image}} alt={{title}}><br>
-        <a href={{wiki}}>Click here to visit the movies wiki page!</a><br>
-        <div style="padding-top: 15px;">
-        <form method="POST" action=""> 
-            {{ form.hidden_tag() }}
-                    {{ form.movieid.label }}
-                    {{ form.movieid(placeholder="MovieID", value=movie) }}
-                    
-                    {{ form.rating.label }}
-                    {{ form.rating(placeholder="Rating")}} <br>
-                    <br>
+            <h1>Let's get prepared & happy!</h1><br><br>
+            <div class="News">
+                <h2>News up first, coming to you<br> from the New York Times!</h2>
+                <h3>{{title}}</h3>
+                <img src={{movie}} alt={{title}} class="center"
+                    style="max-width: 90%;"
+                    /><br>
+                <h3>{{abstract}}</h3>
+                <h3>{{published_date}}</h3>
+                <a href={{the_url}}> Click here to read the full story!</a><br>
 
-                   <br>
-                    {{ form.comment(cols="30", rows="4", placeholder="Leave a comment") }}<br>
-                    {{ form.submit }}
-        </form>
-        <h1>See what other people said!</h1>
-        </div>
-        {% for movies in query %}
-       <h2>User: {{movies.username}}</h2>
-       <h2>Rating: {{movies.rating}}</h2>
-       <h3>{{movies.comment}}</h3><br>
-                {% endfor %}
-        </div>
-        </div>
+                <!-- <video width="320" height="240" autoplay muted>
+                    <source src={{picture}} type="video/mp4">
+                    <source src="movie.ogg" type="video/ogg">
+                    Your browser does not support the video tag.
+                </video>
+
+                <a href={{picture}} alt={{title}}><br> -->
+            </div>
+
+            <div class="column is-one-third">
+                <div class="box">
+                    <article class="media">
+                        <div class="media-left">
+                            <figure class="image is-50x50">
+                                <img src="http://openweathermap.org/img/w/{{ icon }}.png" alt="Image">
+                            </figure>
+                        </div>
+                        <div class="media-content">
+                            <div class="content">
+                                <p>
+                                    <span class="title">{{ city }}</span>
+                                    <br>
+                                    <span class="subtitle">{{ temp }}° F</span>
+                                    <br> {{ description }}
+                                </p>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>             
+        </div>   
     </body>
 </html> 
-
