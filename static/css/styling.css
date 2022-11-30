@@ -24,6 +24,7 @@ body {
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
+    
 }
 .topnav {
     background-color: rgb(214, 137, 104);
@@ -52,3 +53,29 @@ body {
 .topnav-right {
     float: right;
 }
+.container-top {
+    --offset: 100px;
+    --fade: 120px;
+    
+    display: flex;
+    width: 60px;
+    justify-self: end;
+    justify-content: flex-end;
+    align-items: flex-end;
+    -webkit-mask:linear-gradient(#0000 calc(100vh + var(--offset)),#000 calc(100vh + var(--offset) + var(--fade)));
+  }
+  
+  .top {
+    place-self:end;
+    position:sticky;
+    bottom:20px;
+    margin-top:100vh;
+    
+    text-decoration: none;
+    padding: 10px;
+    font-family: sans-serif;
+    /* color: #fff; */
+    color: black;
+    background: rgb(247,203,202);
+    border-radius: 100px;
+  }
