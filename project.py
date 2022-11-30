@@ -34,13 +34,6 @@ class Person(db.Model, UserMixin):
     username = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(200), nullable=False)
 
-class Movie(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), nullable=False)
-    movieid = db.Column(db.Integer, nullable=True)
-    rating = db.Column(db.Integer, nullable=True)
-    comment = db.Column(db.String(200), nullable=True)
-
 with app.app_context():
     db.create_all()
 
@@ -68,15 +61,36 @@ class LoginForm(FlaskForm):
                 "That username does not exist. Please try again."
             )
 
-# class MovieForm(FlaskForm):
-#     #username = StringField(validators=[Length(min=4, max=20)], render_kw={"placeholder": "Username"})
-#     movieid = IntegerField(label="MovieID: ", render_kw={'readonly': True})
-#     rating = IntegerField(label="Rating (out of 10):", validators=[NumberRange(min=1, max=10, message="must be 1 to 10")])
-#     comment = StringField(widget=TextArea(), validators=[Length(0, 200)])
-#     submit = SubmitField("Submit")
+
+def get_weather():
+    WEATHER_API_BASE_URL = f'http://api.openweathermap.org/data/2.5/weather'
+
+    response = requests.get(
+        WEATHER_API_BASE_URL,
+        params={
+            'q': 'Austin',
+            'units': 'imperial',
+            'appid': os.getenv('OPEN_WEATHER_API_KEY')
+        }
+    )
+    weather_data = response.json()
+    # weather_stuff = weather_data['weather'][0]
+    # city_name = weather_data['name']
+    # # city_temp = weather_data["main"]
+    # weather_list = [city_name,]
+
+    weather = {
+        'city' : 'Austin',
+        'temperature' : weather_data['main']['temp'],
+        'description' : weather_data['weather'][0]['description'],
+        'icon' : weather_data['weather'][0]['icon'],
+        }
+    
+    # some = [str(weather_stuff['main']), str(weather_stuff['description']), str(city_name), str(city_temp[''])]
+
+    return weather
 
 def get_news():
-    #PATH = f'/world.json'
     NYT_API_BASE_URL= f'https://api.nytimes.com/svc/topstories/v2/world.json?'
 
     response = requests.get(
@@ -92,49 +106,6 @@ def get_news():
         str(news_data['url']), str(news_data['published_date']), str(movie_data['url'])]
     
     return all_news_info
-
-# def get_movies():
-#     MOVIE_IDS = [84773, 864959, 634649]
-#     MOVIE = MOVIE_IDS[randrange(3)]
-#     MOVIE_PATH = f'/movie/{MOVIE}'
-#     MOVIE_API_BASE_URL = f'https://api.themoviedb.org/3{MOVIE_PATH}'
-#     IMG_URL = 'https://image.tmdb.org/t/p/w500'
-
-#     response = requests.get(
-#         MOVIE_API_BASE_URL,
-#         params={
-#             'api_key':os.getenv('TMDB_API_KEY')
-#         }
-#     )
-#     movie_data = response.json()
-#     pretty_json_data = json.dumps(movie_data, indent=4, sort_keys=True)
-#     img_url = IMG_URL + movie_data['poster_path']
-#     wiki_link = wiki_api(title = movie_data['original_title'])
-    
-#     return movie_sorter(movie_data, img_url, wiki_link, MOVIE)
-
-# def wiki_api(title):
-#     request = requests.Session()
-#     WIKI_API_BASE_URL = 'https://en.wikipedia.org/w/api.php'
-#     PARAMS={
-#         "action": "opensearch",
-#         "namespace": "0",
-#         "search": str(title),
-#         "limit": "1",
-#         "format": "json"
-#     }
-#     wiki = request.get(url=WIKI_API_BASE_URL, params=PARAMS)
-#     wiki_data = wiki.json()
-
-#     return wiki_data[3][0]
-
-# def movie_sorter(movie_data, img_url, wiki_link, MOVIE):
-#     movies_info = ""
-#     for genre in movie_data['genres']:
-#         movies_info = movies_info + str(genre['name']) + ", "
-#     all_movie_data = [movie_data['original_title'], movie_data['tagline'], movies_info, img_url, wiki_link, MOVIE]
-    
-#     return all_movie_data
 
 @app.route('/')
 def home():
@@ -176,36 +147,11 @@ def signup():
 @app.route('/home', methods=['GET', 'POST'])
 @login_required
 def index():
-    #form = MovieForm()
+    weather_info = get_weather()
     news_info = get_news()
-    # if current_user.is_authenticated:
-        #if form.validate_on_submit():
-        #     user = current_user.username
-        #     movie_rating = Movie(username=user, movieid=form.movieid.data, 
-        #         rating=form.rating.data, comment=form.comment.data) 
-        #     db.session.add(movie_rating)
-        #     db.session.commit()
-        #     return flask.redirect(flask.url_for('index'))
-        # movieID = Movie.query.filter_by(movieid=movies_info[5]).all()
     
-    return flask.render_template('website.html', title=news_info[0], published_date=news_info[1], 
-        abstract=news_info[3], the_url=news_info[2], movie=news_info[4])
-
-# def index():
-#     form = MovieForm()
-#     movies_info = get_movies()
-#     if current_user.is_authenticated:
-#         if form.validate_on_submit():
-#             user = current_user.username
-#             movie_rating = Movie(username=user, movieid=form.movieid.data, 
-#                 rating=form.rating.data, comment=form.comment.data) 
-#             db.session.add(movie_rating)
-#             db.session.commit()
-#             return flask.redirect(flask.url_for('index'))
-#         movieID = Movie.query.filter_by(movieid=movies_info[5]).all()
-    
-#     return flask.render_template('website.html', title=movies_info[0], 
-#         summary=movies_info[1], genre=movies_info[2], image=movies_info[3], 
-#         wiki=movies_info[4], movie=movies_info[5], query=movieID, form=form)
+    return flask.render_template('website.html', city=weather_info['city'],
+        temp=weather_info['temperature'], description=weather_info['description'], icon=weather_info['icon'],
+        title=news_info[0], published_date=news_info[1], abstract=news_info[3], the_url=news_info[2], movie=news_info[4])
 
 #app.run(debug=True)
