@@ -12,6 +12,7 @@ from wtforms import StringField, IntegerField, PasswordField, SubmitField, Selec
 from wtforms.validators import InputRequired, Length, ValidationError, NumberRange
 from wtforms.widgets import TextArea
 from flask_bcrypt import Bcrypt
+import datetime
 
 load_dotenv(find_dotenv())
 
@@ -89,6 +90,35 @@ def get_weather():
 
     return weather
 
+# def get_this_day():
+#     today = datetime.datetime.now()
+#     date = today.strftime('%m/%d')
+
+#     url = f'https://api.wikimedia.org/feed/v1/wikipedia/en/onthisday/all/' + date
+
+#     headers = {
+#     'Authorization': 'Bearer YOUR_ACCESS_TOKEN',
+#     'User-Agent': os.getenv('MY_EMAIL')
+#     }
+
+#     response = requests.get(url, headers=headers)
+#     data = response.json()
+#     print(data)
+#     return data
+
+def get_yo_mama():
+    url = "https://yo-mama-jokes.p.rapidapi.com/random-joke"
+
+    headers = {
+        "X-RapidAPI-Key": os.getenv('YO_MAMA_API_KEY'),
+        "X-RapidAPI-Host": "yo-mama-jokes.p.rapidapi.com"
+    }
+    image='https://cdn.buttercms.com/xtki0y6bR86BfqhNP59O'
+    response = requests.request("GET", url, headers=headers)
+    mama_info=[response.text, image]
+
+    return mama_info
+
 def get_CN_joke():
     CN_API_BASE_URL = f'https://api.chucknorris.io/jokes/random'
     response = requests.get(
@@ -161,11 +191,12 @@ def index():
     weather_info = get_weather()
     news_info = get_news()
     cn_joke = get_CN_joke()
+    yo_mamma_joke = get_yo_mama()
     
     return flask.render_template('website.html', city=weather_info['city'],
         temp=weather_info['temperature'], description=weather_info['description'], 
         icon=weather_info['icon'], title=news_info[0], published_date=news_info[1], 
         abstract=news_info[3], the_url=news_info[2], movie=news_info[4], norris=cn_joke[0], 
-        norris_joke=cn_joke[1])
+        norris_joke=cn_joke[1], mama=yo_mamma_joke[0], mama_pic=yo_mamma_joke[1])
 
 #app.run(debug=True)

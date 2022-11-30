@@ -9,6 +9,7 @@ Each member lists links to their 2 pull requests in the README as well
     - https://github.com/alecn1/Group-final-project/pull/2
 2) Alec:
     - https://github.com/alecn1/Group-final-project/pull/1
+    - https://github.com/alecn1/Group-final-project/pull/4
 
 Google Doc link with access to Group Proposal is in README
 - https://docs.google.com/document/d/1_t2hlxrY_LrhzNmOjshe5Tv6yDbuQsOSfxpF2ZyBdLc/edit?usp=sharing
