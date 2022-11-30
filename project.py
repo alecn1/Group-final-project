@@ -87,8 +87,9 @@ def get_news():
     )
     print(response.status_code)
     news_data = response.json()['results'][0]
+    movie_data = response.json()['results'][0]['multimedia'][0]
     all_news_info = [str(news_data['title']), str(news_data['abstract']), 
-        str(news_data['url']), str(news_data['published_date'])]
+        str(news_data['url']), str(news_data['published_date']), str(movie_data['url'])]
     
     return all_news_info
 
@@ -187,8 +188,8 @@ def index():
         #     return flask.redirect(flask.url_for('index'))
         # movieID = Movie.query.filter_by(movieid=movies_info[5]).all()
     
-    return flask.render_template('website.html', title=news_info[0], 
-        published_date=news_info[1], abstract=news_info[3], the_url=news_info[2])
+    return flask.render_template('website.html', title=news_info[0], published_date=news_info[1], 
+        abstract=news_info[3], the_url=news_info[2], movie=news_info[4])
 
 # def index():
 #     form = MovieForm()
