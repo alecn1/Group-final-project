@@ -75,6 +75,34 @@ class MovieForm(FlaskForm):
     comment = StringField(widget=TextArea(), validators=[Length(0, 200)])
     submit = SubmitField("Submit")
 
+def get_weather():
+    WEATHER_API_BASE_URL = f'http://api.openweathermap.org/data/2.5/weather'
+
+    response = requests.get(
+        WEATHER_API_BASE_URL,
+        params={
+            'q': 'Austin',
+            'units': 'imperial',
+            'appid': os.getenv('OPEN_WEATHER_API_KEY')
+        }
+    )
+    weather_data = response.json()
+    # weather_stuff = weather_data['weather'][0]
+    # city_name = weather_data['name']
+    # # city_temp = weather_data["main"]
+    # weather_list = [city_name,]
+
+    weather = {
+        'city' : 'Austin',
+        'temperature' : weather_data['main']['temp'],
+        'description' : weather_data['weather'][0]['description'],
+        'icon' : weather_data['weather'][0]['icon'],
+        }
+    
+    # some = [str(weather_stuff['main']), str(weather_stuff['description']), str(city_name), str(city_temp[''])]
+
+    return weather
+
 def get_movies():
     MOVIE_IDS = [84773, 864959, 634649]
     MOVIE = MOVIE_IDS[randrange(3)]
@@ -160,6 +188,8 @@ def signup():
 def index():
     form = MovieForm()
     movies_info = get_movies()
+    weather_info = get_weather()
+
     if current_user.is_authenticated:
         if form.validate_on_submit():
             user = current_user.username
@@ -172,6 +202,8 @@ def index():
     
     return flask.render_template('website.html', title=movies_info[0], 
         summary=movies_info[1], genre=movies_info[2], image=movies_info[3], 
-        wiki=movies_info[4], movie=movies_info[5], query=movieID, form=form)
+        wiki=movies_info[4], movie=movies_info[5], query=movieID, city=weather_info['city'],
+        temp=weather_info['temperature'], description=weather_info['description'], icon=weather_info['icon'],
+        form=form)
 
-#app.run(debug=True)
+app.run(debug=True)

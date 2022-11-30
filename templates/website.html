@@ -53,7 +53,7 @@
                 <a href="/logout"><b>Logout</b></a>
             </div>
         </div>
-        
+    
         <meta charset="UTF-8">
         <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/styling.css') }}"> -->
     </head>
@@ -62,6 +62,29 @@
         <div class="Center">
         <div class="main">
         <h1>Movie Explorer</h1>
+        <div class="column is-one-third">
+                    
+            <div class="box">
+                <article class="media">
+                    <div class="media-left">
+                        <figure class="image is-50x50">
+                            <img src="http://openweathermap.org/img/w/{{ icon }}.png" alt="Image">
+                        </figure>
+                    </div>
+                    <div class="media-content">
+                        <div class="content">
+                            <p>
+                                <span class="title">{{ city }}</span>
+                                <br>
+                                <span class="subtitle">{{ temp }}° F</span>
+                                <br> {{ description }}
+                            </p>
+                        </div>
+                    </div>
+                </article>
+            </div>
+            
+        </div>
         <h2>{{title}}</h2>
         <h3>{{summary}}</h3>
         <p>Genres: {{genre}}</p>
