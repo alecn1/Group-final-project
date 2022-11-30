@@ -98,11 +98,14 @@ def get_fact():
         'X-Api-Key':os.getenv('NINJA_API_KEY')
         }
     )
-    #random_fact = response.json()#['contents'][0]
+    random_fact = response.json()[0]['fact']
     #info = {'fact': random_fact}
     #print(str(random_fact['fact']))
     #all_info = [int(random_fact['fact'])]
-    return response.text
+    # fact = {
+    #     'fact': random_fact[0]['fact']
+    # }
+    return random_fact
 
 def get_yo_mama():
     url = f"https://yo-mama-jokes.p.rapidapi.com/random-joke"
@@ -199,4 +202,4 @@ def index():
         norris_joke=cn_joke[1], mama=yo_mamma_joke[0], mama_pic=yo_mamma_joke[1], 
         fact=this_day)
 
-#app.run(debug=True)
+app.run(debug=True)
