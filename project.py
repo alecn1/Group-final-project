@@ -61,7 +61,6 @@ class LoginForm(FlaskForm):
                 "That username does not exist. Please try again."
             )
 
-
 def get_weather():
     WEATHER_API_BASE_URL = f'http://api.openweathermap.org/data/2.5/weather'
 
@@ -90,6 +89,19 @@ def get_weather():
 
     return weather
 
+def get_CN_joke():
+    CN_API_BASE_URL = f'https://api.chucknorris.io/jokes/random'
+    response = requests.get(
+        CN_API_BASE_URL
+    )
+    cn_joke_data = response.json()
+    image = f"https://api.chucknorris.io/img/chucknorris_logo_coloured_small@2x.png"
+    all_cn_data = [image, cn_joke_data['value']]
+
+    # cn_joke_data['icon_url'], ICON UNAVAILABLE
+    
+    return all_cn_data
+
 def get_news():
     NYT_API_BASE_URL= f'https://api.nytimes.com/svc/topstories/v2/world.json?'
 
@@ -99,7 +111,7 @@ def get_news():
             'api-key':os.getenv('NYT_API_KEY')
         }
     )
-    print(response.status_code)
+    #print(response.status_code)
     news_data = response.json()['results'][0]
     movie_data = response.json()['results'][0]['multimedia'][0]
     all_news_info = [str(news_data['title']), str(news_data['abstract']), 
@@ -126,7 +138,6 @@ def login():
 @login_required
 def logout():
     logout_user()
-    
     return flask.redirect(flask.url_for('login'))
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -149,9 +160,12 @@ def signup():
 def index():
     weather_info = get_weather()
     news_info = get_news()
+    cn_joke = get_CN_joke()
     
     return flask.render_template('website.html', city=weather_info['city'],
-        temp=weather_info['temperature'], description=weather_info['description'], icon=weather_info['icon'],
-        title=news_info[0], published_date=news_info[1], abstract=news_info[3], the_url=news_info[2], movie=news_info[4])
+        temp=weather_info['temperature'], description=weather_info['description'], 
+        icon=weather_info['icon'], title=news_info[0], published_date=news_info[1], 
+        abstract=news_info[3], the_url=news_info[2], movie=news_info[4], norris=cn_joke[0], 
+        norris_joke=cn_joke[1])
 
 #app.run(debug=True)
