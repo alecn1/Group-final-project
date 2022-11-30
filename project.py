@@ -84,6 +84,8 @@ def get_weather():
         'temperature' : weather_data['main']['temp'],
         'description' : weather_data['weather'][0]['description'],
         'icon' : weather_data['weather'][0]['icon'],
+        'high' : weather_data['main']['temp_max'],
+        'low' : weather_data['main']['temp_min']
         }
     
     # some = [str(weather_stuff['main']), str(weather_stuff['description']), str(city_name), str(city_temp[''])]
@@ -197,7 +199,7 @@ def index():
     
     return flask.render_template('website.html', city=weather_info['city'],
         temp=weather_info['temperature'], description=weather_info['description'], 
-        icon=weather_info['icon'], title=news_info[0], published_date=news_info[1], 
+        icon=weather_info['icon'], temp_high=weather_info['high'], temp_low=weather_info['low'], title=news_info[0], published_date=news_info[1], 
         abstract=news_info[3], the_url=news_info[2], movie=news_info[4], norris=cn_joke[0], 
         norris_joke=cn_joke[1], mama=yo_mamma_joke[0], mama_pic=yo_mamma_joke[1], 
         fact=this_day)
