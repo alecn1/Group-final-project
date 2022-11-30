@@ -90,24 +90,22 @@ def get_weather():
 
     return weather
 
-# def get_this_day():
-#     today = datetime.datetime.now()
-#     date = today.strftime('%m/%d')
-
-#     url = f'https://api.wikimedia.org/feed/v1/wikipedia/en/onthisday/all/' + date
-
-#     headers = {
-#     'Authorization': 'Bearer YOUR_ACCESS_TOKEN',
-#     'User-Agent': os.getenv('MY_EMAIL')
-#     }
-
-#     response = requests.get(url, headers=headers)
-#     data = response.json()
-#     print(data)
-#     return data
+def get_fact():
+    RANDOM_FACT_API_URL = f'https://api.api-ninjas.com/v1/facts'
+    response = requests.get(
+        RANDOM_FACT_API_URL,
+        headers={
+        'X-Api-Key':os.getenv('NINJA_API_KEY')
+        }
+    )
+    #random_fact = response.json()#['contents'][0]
+    #info = {'fact': random_fact}
+    #print(str(random_fact['fact']))
+    #all_info = [int(random_fact['fact'])]
+    return response.text
 
 def get_yo_mama():
-    url = "https://yo-mama-jokes.p.rapidapi.com/random-joke"
+    url = f"https://yo-mama-jokes.p.rapidapi.com/random-joke"
 
     headers = {
         "X-RapidAPI-Key": os.getenv('YO_MAMA_API_KEY'),
@@ -120,9 +118,9 @@ def get_yo_mama():
     return mama_info
 
 def get_CN_joke():
-    CN_API_BASE_URL = f'https://api.chucknorris.io/jokes/random'
+    CN_API_URL = f'https://api.chucknorris.io/jokes/random'
     response = requests.get(
-        CN_API_BASE_URL
+        CN_API_URL
     )
     cn_joke_data = response.json()
     image = f"https://api.chucknorris.io/img/chucknorris_logo_coloured_small@2x.png"
@@ -192,11 +190,13 @@ def index():
     news_info = get_news()
     cn_joke = get_CN_joke()
     yo_mamma_joke = get_yo_mama()
+    this_day=get_fact()
     
     return flask.render_template('website.html', city=weather_info['city'],
         temp=weather_info['temperature'], description=weather_info['description'], 
         icon=weather_info['icon'], title=news_info[0], published_date=news_info[1], 
         abstract=news_info[3], the_url=news_info[2], movie=news_info[4], norris=cn_joke[0], 
-        norris_joke=cn_joke[1], mama=yo_mamma_joke[0], mama_pic=yo_mamma_joke[1])
+        norris_joke=cn_joke[1], mama=yo_mamma_joke[0], mama_pic=yo_mamma_joke[1], 
+        fact=this_day)
 
 #app.run(debug=True)
