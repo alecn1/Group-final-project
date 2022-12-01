@@ -205,4 +205,4 @@ def index():
         norris_joke=cn_joke[1], mama=yo_mamma_joke[0], mama_pic=yo_mamma_joke[1], 
         fact=this_day)
 
-app.run(debug=True)
+#app.run(debug=True)
