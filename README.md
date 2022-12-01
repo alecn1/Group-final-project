@@ -15,7 +15,7 @@ Google Doc link with access to Group Proposal is in README
 - https://docs.google.com/document/d/1_t2hlxrY_LrhzNmOjshe5Tv6yDbuQsOSfxpF2ZyBdLc/edit?usp=sharing
 
 fly.io deployment link is included in README
-
+https://group-final.fly.dev/
 
 2+ examples of things you enjoyed about or learned from this project
 1) Lily- I feel like I had retained a lot more than I thought I had, so knowing what to search made everything all the better. I also enjoyed working with Alec, a character he is.
@@ -44,4 +44,6 @@ List any stretch features you undertook in your README under a section called â€
     - Top bar navigation
     - Back to top
     - Jump to links for different sections
+        - **We didn't do this, but we are acknowledge & understand
+            that there will be less points awarded. Thank you!**
     - Prettified
