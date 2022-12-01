@@ -15,25 +15,25 @@
 </head>
 <body>
     <div class="Center">
-    <div class="signup">
-    <h1>Register Page</h1>
-    <form method="POST" action="">
-        {{ form.hidden_tag() }}
-        {{ form.username }}
-        {{ form.password }}
-        {{ form.submit }}
-    </form>
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-        <div class="notification is-danger"><br>
-            {{ messages[0] }} go to login page.
+        <div class="signup">
+        <h1>Register Page</h1>
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            {{ form.username }}
+            {{ form.password }}
+            {{ form.submit }}
+        </form>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="notification is-danger"><br>
+                {{ messages[0] }} go to login page.
+            </div>
+        {% endif %}
+        {% endwith %}
+        <a href="{{ url_for('login') }}" class="navbar-item">
+            Login
+        </a>
         </div>
-    {% endif %}
-    {% endwith %}
-    <a href="{{ url_for('login') }}" class="navbar-item">
-        Login
-    </a>
-    </div>
     </div>
 </body>
 </html>

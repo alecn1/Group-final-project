@@ -16,25 +16,25 @@
 </head>
 <body>
     <div class ="Center">
-    <div class="login">
-    <h1>Login Page</h1>
-    <form method="POST" action="">
-        {{ form.hidden_tag() }}
-        {{ form.username }}
-        {{ form.password }}
-        {{ form.submit }}
-    </form>
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-        <div class="notification is-danger">
-            {{ messages[0] }} go to <a href="{{ url_for('login') }}">login page</a>.
+        <div class="login">
+        <h1>Login Page</h1>
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            {{ form.username }}
+            {{ form.password }}
+            {{ form.submit }}
+        </form>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="notification is-danger">
+                {{ messages[0] }} go to <a href="{{ url_for('login') }}">login page</a>.
+            </div>
+        {% endif %}
+        {% endwith %}
+        <a href="{{ url_for('signup') }}" class="navbar-item">
+            Sign Up
+        </a>
         </div>
-    {% endif %}
-    {% endwith %}
-    <a href="{{ url_for('signup') }}" class="navbar-item">
-        Sign Up
-    </a>
-    </div>
     </div>
 </body>
 </html>

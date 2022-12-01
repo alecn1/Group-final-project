@@ -15,32 +15,23 @@
 
     <body>
         <div class="Center">
-            <h1>Let's get prepared & happy!</h1><br><br>
-            <div class="News">
-                <h2>News up first, coming to you<br> from the New York Times!</h2>
-                <h3>{{title}}</h3>
-                <img src={{movie}} alt={{title}} class="center"
-                    style="max-width: 90%;"/><br>
-                <h3>{{abstract}}</h3>
-                <h3>{{published_date}}</h3>
-                <a href={{the_url}}> Click here to read the full story!</a><br>
-            </div>
+            <h1>~ Let's get prepared for the day & be happy! ~</h1><br><br>
 
             <div class="column is-one-third">
                 <div class="box">
                     <article class="media">
                         <div class="media-left">
-                            <figure class="image is-50x50">
-                                <img src="http://openweathermap.org/img/w/{{ icon }}.png" alt="Image">
-                            </figure>
+                                <img src="https://openweathermap.org/themes/openweathermap/assets/img/mobile_app/android-app-top-banner.png" alt="Image"
+                                style="width: 90px; height: 90px;"/>
                         </div>
                         <div class="media-content">
                             <div class="content">
                                 <p>
-                                    <span class="title">{{ city }}</span>
-                                    <br>
-                                    <span class="subtitle">{{ temp }}° F</span>
-                                    <br> {{ description }}
+                                    <h2><b>-- The Weather Today in {{ city }} --</b></h2>
+                                    <h3>Current temperature is: {{ temp }}° F</h3>
+                                    <h3>with a high of {{ temp_high }}° F</h3>
+                                    <h3>and a low of {{ temp_low }}° F</h3>
+                                    <h3>with (a) {{ description }}!</h3>
                                 </p>
                             </div>
                         </div>
@@ -48,16 +39,26 @@
                 </div>
             </div>
 
+            <div class="News">
+                <h2><b>-- Coming to you from the New York Times --</b></h2>
+                <h3><u>{{title}}</u></h3>
+                <img src={{movie}} alt={{title}} class="center"
+                    style="max-width: 90%;"/><br>
+                <h3>{{abstract}}</h3>
+                <h3>{{published_date}}</h3>
+                <a href={{the_url}}> Click here to read the full story!</a><br><br>
+            </div>
+
             <div class="Norris">
-                <h1>Random fact:...</h1>
-                <h2>{{fact}}</h2>
-                <h1><u>Ready for some *yolks*?</u></h1>
+                <h2><b>-- Random fact a day.. keeps the doctor away? --</b></h2>
+                <h3>{{fact}}</h2><br><br>
+                <h2><b>-- Ready for some *yolks*? --</b></h1>
                 <img src="{{norris}}" class="center" style="max-width: 80%;"/>
-                <h2>{{norris_joke}}</h2>
-                <img src="{{mama_pic}}" class="center" style="max-width: 80%;"/>
-                <h2>{{mama}}</h2>
+                <h3>{{norris_joke}}</h2><br>
+                <br><img src="{{mama_pic}}" class="center" style="max-width: 80%;"/>
+                <h3>{{mama}}</h2>
             </div>
         </div>   
-        <a href="#" class="top">Back to Top &#8593;</a>
+        <a href="#" class="top"><b>Back to Top &#8593;</b></a>
     </body>
 </html> 
