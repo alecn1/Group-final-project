@@ -137,7 +137,7 @@ def get_CN_joke():
     return all_cn_data
 
 def get_news():
-    NYT_API_BASE_URL= f'https://api.nytimes.com/svc/topstories/v2/world.json?'
+    NYT_API_BASE_URL= f'https://api.nytimes.com/svc/topstories/v2/world.json'
 
     response = requests.get(
         NYT_API_BASE_URL,
@@ -146,10 +146,12 @@ def get_news():
         }
     )
     #print(response.status_code)
-    news_data = response.json()['results'][0]
-    movie_data = response.json()['results'][0]['multimedia'][0]
+    news = response.json()
+    news_data = news['results'][1]
+    movie_data = news['results'][1]['multimedia'][1]
+    num_art = response.json()#['num_results']
     all_news_info = [str(news_data['title']), str(news_data['abstract']), 
-        str(news_data['url']), str(news_data['published_date']), str(movie_data['url'])]
+        str(news_data['url']), str(news_data['published_date']), str(movie_data['url']), num_art]
     
     return all_news_info
 
@@ -201,7 +203,7 @@ def index():
     return flask.render_template('website.html', city=weather_info['city'],
         temp=weather_info['temperature'], description=weather_info['description'], 
         icon=weather_info['icon'], temp_high=weather_info['high'], temp_low=weather_info['low'], title=news_info[0], published_date=news_info[1], 
-        abstract=news_info[3], the_url=news_info[2], movie=news_info[4], norris=cn_joke[0], 
+        abstract=news_info[3], the_url=news_info[2], movie=news_info[4], num=news_info[5], norris=cn_joke[0], 
         norris_joke=cn_joke[1], mama=yo_mamma_joke[0], mama_pic=yo_mamma_joke[1], 
         fact=this_day)
 
